@@ -1,45 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+    <!-- TODO: Add a build cli profile and a build api profile -->
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ejrp</groupId>
     <artifactId>MidiToImgVid</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>MidiToImgVid</name>
+    <description>A program that helps to create videos of a collection of stills
+                 images that are synced to the notes in a midi file</description>
+    <modules>
+        <module>lib</module>
+        <module>cli</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.8.22</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.13.1</junit.version>
-        <main.class>com.ejrp.MainKt</main.class>
-        <humble.version>0.3.0</humble.version>
-        <nativeLib.artifactId>humble-video-arch-x86_64-pc-linux-gnu6</nativeLib.artifactId>
     </properties>
 
     <dependencies>
-
-        <dependency>
-            <groupId>io.humble</groupId>
-            <artifactId>humble-video-all</artifactId>
-            <version>${humble.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.humble</groupId>
-            <artifactId>${nativeLib.artifactId}</artifactId>
-            <version>${humble.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-reload4j</artifactId>
-            <version>2.0.5</version>
-        </dependency>
-
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
@@ -61,9 +47,6 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -72,7 +55,7 @@
                 <executions>
                     <execution>
                         <id>compile</id>
-                        <phase>compile</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
@@ -86,97 +69,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <source>12</source>
-                    <target>12</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals> <goal>single</goal> </goals>
-                        <configuration>
-                            <archive>
-                                <manifest>
-                                    <mainClass>${main.class}</mainClass>
-                                </manifest>
-                            </archive>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>io.humble</groupId>
-                                    <artifactId>${nativeLib.artifactId}</artifactId>
-                                    <version>${humble.version}</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
-                <configuration>
-                    <systemProperties>
-                        <property>
-                            <name>java.library.path</name>
-                            <value>${project.build.directory}/lib</value>
-                        </property>
-                    </systemProperties>
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
-
-    <!-- Build Type -->
-    <profiles>
-        <profile>
-            <id>win64</id>
-            <properties>
-                <nativeLib.artifactId>humble-video-arch-x86_64-win64-mingw32</nativeLib.artifactId>
-            </properties>
-        </profile>
-        <profile>
-            <id>linux</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <nativeLib.artifactId>humble-video-arch-x86_64-pc-linux-gnu6-debug</nativeLib.artifactId>
-            </properties>
-        </profile>
-    </profiles>
 
 </project>

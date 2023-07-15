@@ -5,3 +5,4 @@ samples
 target
 output.mp4
 executeScript.sh
+*.iml

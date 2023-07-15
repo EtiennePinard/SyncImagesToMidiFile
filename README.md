@@ -6,7 +6,21 @@ that are synced to a midi file
 The current version will only handle type 0 or 1 midi file    
 It can also cannot handle SMPTE time division  
 
-## How to run
+## How to use the library
+1. Clone the repo
+2. Run  
+`cd lib`  
+`mvn install`
+3. Include the dependency in your maven project
+```xml
+<dependency>
+    <groupId>com.ejrp</groupId>
+    <artifactId>MidiToImgVid-lib</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
+## How to use the cli
 #### Requirement: 
 - Java
 - Maven
@@ -14,8 +28,13 @@ It can also cannot handle SMPTE time division
 - A midi file
 - Make sure your output format is installed on your system
 
-1. Open the project in your environment
+1. Clone the repo
 2. Run   
-`mvn package`  
+`cd cli`
+`mvn package -P linux` Note: Use `win64` if you are on windows     
 `cd target`  
-`java -jar MidiToImgVid-1.0-jar-with-dependencies.jar <midi file path> <images folder path> <format name> <width> <height>`
+`java -jar MidiToImgVid-1.0-jar-with-dependencies.jar <midi file path> <images folder path> <format name> <width> <height>`  
+
+Note: If you want to move the jar file, make sure to also move the lib folder so that the jar file
+and the lib folder exists in the same directory. The lib folder contains the native library
+needed to run humble, the media processing library that uses the JNI
