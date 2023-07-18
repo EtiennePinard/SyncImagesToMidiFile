@@ -1,17 +1,15 @@
 # Sync Images To Midi File
 This is a program which will create a video of static images
-that are synced to a midi file  
+which are synced to a midi file  
 
 ### Limitations
 The current version will only handle type 0 or 1 midi file    
-It can also cannot handle SMPTE time division  
+It also cannot handle SMPTE time division  
 
 ## How to use the library
 1. Clone the repo
-2. Run  
-`cd lib`  
-`mvn install`
-3. Include the dependency in your maven project
+2. Run `mvn install`
+3. Include the dependency in your Maven project
 ```xml
 <dependency>
     <groupId>com.ejrp</groupId>
