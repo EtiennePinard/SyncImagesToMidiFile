@@ -16,7 +16,7 @@
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <main.class>com.ejrp.cli.MainKt</main.class>
+        <main.class>com.ejrp.MainKt</main.class>
         <humble.version>0.3.0</humble.version>
         <nativeLib.artifactId>humble-video-arch-x86_64-pc-linux-gnu6</nativeLib.artifactId>
     </properties>
