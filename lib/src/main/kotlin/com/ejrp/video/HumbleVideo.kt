@@ -22,7 +22,7 @@ data class Frame(val image: BufferedImage, val timestamp: Long)
 data class Dimensions(val width: Int, val height: Int)
 
 /**
- * Represents a video
+ * Represents a video made with the Humble library
  * @property dimensions The width and the height of the video
  * @property timebase The timebase of the video. It is a value that will be
  * multiplied by the timestamp of each frame to determine the frames length in seconds
@@ -30,7 +30,7 @@ data class Dimensions(val width: Int, val height: Int)
  * @property frames A list of frames that contain the image of a frame and its timestamp
  * @constructor Creates a Video object
  */
-class MidiImgSyncVideo(
+class HumbleVideo(
     private val dimensions: Dimensions,
     private val timebase: Rational,
     private val formatName: String,

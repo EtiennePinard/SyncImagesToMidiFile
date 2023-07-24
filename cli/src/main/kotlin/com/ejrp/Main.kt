@@ -5,7 +5,7 @@ import com.ejrp.image.resize
 import com.ejrp.midi.*
 import com.ejrp.video.Dimensions
 import com.ejrp.video.Frame
-import com.ejrp.video.MidiImgSyncVideo
+import com.ejrp.video.HumbleVideo
 import io.humble.video.*
 import java.awt.image.BufferedImage
 import java.io.File
@@ -22,9 +22,7 @@ java -jar MidiToImgVid-cli-1.0-jar-with-dependencies.jar <midi file path> <image
 
 fun main(args: Array<String>) {
     val startTime = System.currentTimeMillis()
-    require(args.size == 5) {
-        arguments()
-    }
+    require(args.size == 5) { arguments }
     // Harcoding it cause Maven moves the lib files anyway
     System.setProperty("java.library.path","./lib")
     val midiPath = args[0]
@@ -85,20 +83,18 @@ fun main(args: Array<String>) {
 
     val encodingVideoTime = System.currentTimeMillis()
     print("Encoding the images into a video file")
-    val midiImgSyncVideo = MidiImgSyncVideo(
+    val humbleVideo = HumbleVideo(
         Dimensions(width, height),
         timebaseInSecondPerMidiTicks,
         formatName,
         frames
     )
-    midiImgSyncVideo.writeToFile(outputPath)
+    humbleVideo.writeToFile(outputPath)
     print(" (${(System.currentTimeMillis() - encodingVideoTime) / 1000} seconds)\n")
     println("DONE (${(System.currentTimeMillis() - startTime) / 1000} seconds)")
 }
 
-private fun arguments(): String {
-    return "Arguments: <midi file path> <images folder path> <format name> <width> <height>"
-}
+const val arguments = "Arguments: <midi file path> <images folder path> <format name> <width> <height>"
 
 /**
  * Is the file path provided valid
