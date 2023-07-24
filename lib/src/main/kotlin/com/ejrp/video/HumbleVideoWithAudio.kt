@@ -121,7 +121,7 @@ class HumbleVideoWithAudio(
 
         // Flushing any cache in the encoders
         do {
-            audioObject.audioDecoder.decode(samples, null, 0);
+            audioObject.audioDecoder.decode(samples, null, 0)
             if (samples.isComplete) {
                 do {
                     audioEncoder.encode(packet, null)
