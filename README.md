@@ -31,7 +31,7 @@ It also cannot handle SMPTE time division
 `cd cli`
 `mvn package -P linux` Note: Use `win64` if you are on windows     
 `cd target`  
-`java -jar MidiToImgVid-1.0-jar-with-dependencies.jar <midi file path> <images folder path> <format name> <width> <height>`  
+`java -jar MidiToImgVid-cli-1.0-jar-with-dependencies.jar <midi file path> <images folder path> <format name> <width> <height>`  
 
 Note: If you want to move the jar file, make sure to also move the lib folder so that the jar file
 and the lib folder exists in the same directory. The lib folder contains the native library
