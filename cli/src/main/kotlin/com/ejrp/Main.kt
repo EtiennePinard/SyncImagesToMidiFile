@@ -63,14 +63,17 @@ fun main(args: Array<String>) {
 
     val images = File(imagePath).listFiles()!!
         .filter { file ->
-            when (file.extension.lowercase()) {
-                "bpm", "gif", "jpeg", "png", "tiff", "wbpm" -> true
-                else -> false
+            try {
+                ImageIO.read(file)
+                return@filter true
+            } catch (_: Exception) {
+                return@filter false
             }
         }
         .map { ImageIO.read(it).resize(width, height).convertToType(BufferedImage.TYPE_3BYTE_BGR) }
         .map { it.resize(width, height).convertToType(BufferedImage.TYPE_3BYTE_BGR) }
-
+    require(images.isNotEmpty()) { "There is no images that the ImageIO class can load. Note that the ImageIO class supports " +
+            "by default these image file types: bpm, gif, jpeg, png, tiff and wbpm" }
     var imageIndex = -1
     val frames = ticksOfNoteOnFromStart.map { midiNote ->
         imageIndex = (imageIndex + 1) % images.size
