@@ -25,7 +25,7 @@ fun main(args: Array<String>) {
     val startTime = System.currentTimeMillis()
     require(args.size == 6) { arguments }
     // Harcoding it cause Maven moves the lib files anyway
-    System.setProperty("java.library.path","./lib")
+    System.setProperty("java.library.path", "./lib")
 
     val midiPath = args[0]
     require(isValidFilePath(midiPath))
@@ -47,16 +47,20 @@ fun main(args: Array<String>) {
 
     val outputPath = "./output.$formatName"
     createFile(outputPath) // Just to make sure
-    println("Creating video from midi file \"$midiPath\"\n" +
-            "\twith audio from file \"$audioPath\"" +
-            "\tusing images from folder $imagePath\n" +
-            "\twith the format $formatName\n" +
-            "\twith a width of $width and height of $height")
+    println(
+        "Creating video from midi file \"$midiPath\"\n" +
+                "\twith audio from file \"$audioPath\"" +
+                "\tusing images from folder $imagePath\n" +
+                "\twith the format $formatName\n" +
+                "\twith a width of $width and height of $height"
+    )
 
     val midiFile = FileInputStream(midiPath).parseMidiFile()
     // Only dealing with format 0 or 1 tracks
-    require(midiFile.headerChunk.format == 0.toUShort() ||
-                    midiFile.headerChunk.format == 1.toUShort()) {
+    require(
+        midiFile.headerChunk.format == 0.toUShort() ||
+                midiFile.headerChunk.format == 1.toUShort()
+    ) {
         "The midi file needs to be format 0 or format 1"
     }
 
@@ -83,8 +87,10 @@ fun main(args: Array<String>) {
         .map { ImageIO.read(it).resize(width, height).convertToType(BufferedImage.TYPE_3BYTE_BGR) }
         .shuffled() // Added the shuffling of the list. Will maybe add it as a flag (-s)
 
-    require(images.isNotEmpty()) { "There is no images that the ImageIO class can load. Note that the ImageIO class supports " +
-            "by default these image file types: bpm, gif, jpeg, png, tiff and wbpm" }
+    require(images.isNotEmpty()) {
+        "There is no images that the ImageIO class can load. Note that the ImageIO class supports " +
+                "by default these image file types: bpm, gif, jpeg, png, tiff and wbpm"
+    }
     var imageIndex = -1
     val frames = ticksOfNoteOnFromStart.map { midiNote ->
         imageIndex = (imageIndex + 1) % images.size
@@ -119,7 +125,8 @@ fun main(args: Array<String>) {
     println("DONE (${(System.currentTimeMillis() - startTime) / 1000} seconds)")
 }
 
-const val arguments = "Arguments: <midi file path> <audio file path (put `-` if no audio)> <images folder path> <format name> <width> <height>"
+const val arguments =
+    "Arguments: <midi file path> <audio file path (put `-` if no audio)> <images folder path> <format name> <width> <height>"
 
 /**
  * Is the file path provided valid
@@ -133,14 +140,17 @@ fun isValidFilePath(filePath: String): Boolean {
             println("The file at the path $filePath does not exist")
             false
         }
+
         !file.isFile -> {
             println("The file at the $filePath is not a file")
             false
         }
+
         !file.canRead() -> {
             println("This program does not have read permission for the file at the path $filePath")
             false
         }
+
         else -> true
     }
 }
@@ -157,14 +167,17 @@ fun isValidFolderPath(folderPath: String): Boolean {
             println("The folder at the path $folderPath does not exist")
             false
         }
+
         !folder.isDirectory -> {
             println("The folder at the $folderPath is not a folder")
             false
         }
+
         !folder.canRead() -> {
             println("This program does not have read permission for the folder at the path $folderPath")
             false
         }
+
         else -> true
     }
 }

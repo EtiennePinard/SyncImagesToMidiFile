@@ -40,3 +40,6 @@ nativeLibs
 
 # Build scripts
 executeScript.sh
+
+# Input files for tests
+lib/src/test/resources/output

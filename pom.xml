@@ -10,7 +10,7 @@
 
     <name>MidiToImgVid</name>
     <description>A program that helps to create videos of a collection of stills
-                 images that are synced to the notes in a midi file</description>
+        images that are synced to the notes in a midi file</description>
     <modules>
         <module>lib</module>
         <module>cli</module>
