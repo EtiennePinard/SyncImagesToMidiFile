@@ -2,7 +2,6 @@ package com.ejrp
 
 import com.ejrp.image.convertToType
 import com.ejrp.image.letterboxToSize
-import com.ejrp.image.resize
 import com.ejrp.midi.*
 import com.ejrp.video.Dimensions
 import com.ejrp.video.Frame
@@ -29,14 +28,14 @@ fun main(args: Array<String>) {
     System.setProperty("java.library.path", "./lib")
 
     val midiPath = args[0]
-    require(isValidFilePath(midiPath))
+    require(File(midiPath).isValidFile())
 
     val audioPath = args[1]
     val isAudioEncoded = audioPath != "-"
-    if (isAudioEncoded) require(isValidFilePath(audioPath))
+    if (isAudioEncoded) require(File(audioPath).isValidFile())
 
     val imagePath = args[2]
-    require(isValidFolderPath(imagePath))
+    require(File(imagePath).isValidFolder())
 
     val formatName = args[3]
     require(MuxerFormat.getFormats().map { it.name }.contains(formatName)) {
@@ -128,59 +127,5 @@ fun main(args: Array<String>) {
 
 const val arguments =
     "Arguments: <midi file path> <audio file path (put `-` if no audio)> <images folder path> <format name> <width> <height>"
-
-/**
- * Is the file path provided valid
- * @param filePath The path to verify
- * @return True if the file exists, is a file, and it can be read, else false
- */
-fun isValidFilePath(filePath: String): Boolean {
-    val file = File(filePath)
-    return when {
-        !file.exists() -> {
-            println("The file at the path $filePath does not exist")
-            false
-        }
-
-        !file.isFile -> {
-            println("The file at the $filePath is not a file")
-            false
-        }
-
-        !file.canRead() -> {
-            println("This program does not have read permission for the file at the path $filePath")
-            false
-        }
-
-        else -> true
-    }
-}
-
-/**
- * Is the folder path provided valid
- * @param folderPath The path to verify
- * @return True if the folder exists, is a directory and its contents can be read, else false
- */
-fun isValidFolderPath(folderPath: String): Boolean {
-    val folder = File(folderPath)
-    return when {
-        !folder.exists() -> {
-            println("The folder at the path $folderPath does not exist")
-            false
-        }
-
-        !folder.isDirectory -> {
-            println("The folder at the $folderPath is not a folder")
-            false
-        }
-
-        !folder.canRead() -> {
-            println("This program does not have read permission for the folder at the path $folderPath")
-            false
-        }
-
-        else -> true
-    }
-}
 
 private fun createFile(path: String) = File(path).createNewFile()
