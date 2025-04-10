@@ -1,6 +1,7 @@
 package com.ejrp
 
 import com.ejrp.image.convertToType
+import com.ejrp.image.letterboxToSize
 import com.ejrp.image.resize
 import com.ejrp.midi.*
 import com.ejrp.video.Dimensions
@@ -84,7 +85,7 @@ fun main(args: Array<String>) {
                 return@filter false
             }
         }
-        .map { ImageIO.read(it).resize(width, height).convertToType(BufferedImage.TYPE_3BYTE_BGR) }
+        .map { ImageIO.read(it).letterboxToSize(width, height).convertToType(BufferedImage.TYPE_3BYTE_BGR) }
         .shuffled() // Added the shuffling of the list. Will maybe add it as a flag (-s)
 
     require(images.isNotEmpty()) {
