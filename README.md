@@ -1,7 +1,6 @@
 # Sync Images To Midi File
 
-This is a program which will create a video of static images
-which are synced to a midi file
+This is a program which will create a video of static images which are synced to a midi file.
 
 ### Limitations
 
