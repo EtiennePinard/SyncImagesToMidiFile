@@ -1,5 +1,8 @@
 package com.ejrp.image
 
+import com.ejrp.midiToImgVid.image.convertToType
+import com.ejrp.midiToImgVid.image.letterboxToSize
+import com.ejrp.midiToImgVid.image.resize
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.awt.Color
